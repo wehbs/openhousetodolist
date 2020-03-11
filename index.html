@@ -168,16 +168,14 @@
     
     
     	// Add saved items from localStorage
-      
-      
       for (i = 0; i < localStorage.length; i++) {
       	var li = document.createElement("li");
-  			savedItemKey = localStorage.key(i);
+  	savedItemKey = localStorage.key(i);
         var savedItemValue = window.localStorage.getItem(savedItemKey);
-  			var t = document.createTextNode(savedItemValue);
+  	var t = document.createTextNode(savedItemValue);
         li.appendChild(t);
       	document.getElementById("myUL").appendChild(li);
-			}
+      }
       
       
       // Create a "close" button and append it to each list item
