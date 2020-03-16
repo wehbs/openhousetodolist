@@ -1,242 +1,252 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      body {
-        margin: 0;
-        min-width: 250px;
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      min-width: 250px;
+    }
+
+    /* Include the padding and border in an element's total width and height */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Remove margins and padding from the list */
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Style the list items */
+    ul li {
+      cursor: pointer;
+      position: relative;
+      padding: 12px 40px 12px 40px;
+      list-style-type: none;
+      background: #eee;
+      font-family: sans-serif;
+      font-size: 13px;
+      transition: 0.2s;
+
+      /* make the list items unselectable */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Set all odd list items to a different color (zebra-stripes) */
+    ul li:nth-child(odd) {
+      background: #f9f9f9;
+    }
+
+    /* Darker background-color on hover */
+    ul li:hover {
+      background: #ddd;
+    }
+
+    /* When clicked on, add a background color and strike out text */
+    ul li.checked {
+      background: #888;
+      color: #fff;
+      text-decoration: line-through;
+    }
+
+    /* Add a "checked" mark when clicked on */
+    ul li.checked::before {
+      content: '';
+      position: absolute;
+      border-color: #fff;
+      border-style: solid;
+      border-width: 0 2px 2px 0;
+      top: 10px;
+      left: 16px;
+      transform: rotate(45deg);
+      height: 15px;
+      width: 7px;
+    }
+
+    /* Style the close button */
+    .close {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 12px 16px 12px 16px;
+    }
+
+    .close:hover {
+      background-color: #f44336;
+      color: white;
+    }
+
+    /* Style the check button */
+    /* .check {
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 12px 16px 12px 16px;
+    }
+
+    .check:hover {
+      background-color: #1d12ee;
+      color: white;
+    } */
+
+    /* Style the header */
+    .header {
+      background-color: #000000;
+      padding: 30px 40px;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+    }
+
+    /* Clear floats after the header */
+    .header:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    /* Style the input */
+    input {
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      width: 75%;
+      padding: 10px;
+      float: left;
+      font-size: 16px;
+    }
+
+    /* Style the "Add" button */
+    .addBtn {
+      padding: 10px;
+      width: 25%;
+      background: #d9d9d9;
+      color: #555;
+      float: left;
+      text-align: center;
+      font-size: 16px;
+      font-family: sans-serif;
+      cursor: pointer;
+      transition: 0.3s;
+      border-radius: 0;
+    }
+
+    .addBtn:hover {
+      background-color: #bbb;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="myDIV" class="header">
+    <h2 style="margin:5px">1 Week Before</h2>
+    <input type="text" id="myInput" placeholder="Checklist Item..." />
+    <span onclick="newElement()" class="addBtn">Add</span>
+  </div>
+
+  <ul id="myUL"></ul>
+
+  <script>
+    function store() {
+      window.localStorage.myitems = list.innerHTML;
+    }
+
+    var list = document.querySelector('#myUL');
+    //Get values from localStorage or set defaults if none
+    function getValues() {
+      var storedValues = window.localStorage.myitems;
+      if (!storedValues) {
+        list.innerHTML =
+          "<li>Create your open house strategy early - and make it detailed. Do a walk through of the home, perhaps during the listing photography session, take detailed notes and ask these questions:<br><br>• Where am I going to place the sign-in sheet or the Compass Open House app? What about printed materials?<br><br>• In what order will I show the rooms when guests arrive? <br><br>• Where are the most optimal places to hang signs guiding visitors to the open house?<br><br>• Will parking be an issue? <br><br>• Thinking through these details in advance will ensure you’re fully prepared when it comes to open house day.</li>" +
+          "<li>Call or text seller to confirm schedule of events. Then, email to your seller outlining the steps for open house prep. <a href='https://docs.google.com/document/d/1xDnm5q98JfQhVEQT_iWVhHu4y4NPci6B6pR5vzAQAeY/edit?usp=sharing' target='_blank''>Email template here.</a></li>" +
+          "<li>List the open house on the MLS and verify open house time(s) are correct on all syndicated websites.</li>" +
+          "<li>Email open house announcement to your contact list (brokers and potential buyers). <a href='https://www.compass.com/app/marketing-center/#/?designId=newOpenHouse' target='_blank''>Email template here.</a></li>" +
+          "<li>Let your network know about the open house by sharing <a href='https://www.compass.com/app/marketing-center/#/?designId=openhouse_square' target='_blank''>this asset</a> on your social channels.</li>" +
+          '<li>Order an "Open House Rider" or "Swing A-frame" sign through your <a href="https://compasssupport.zendesk.com/hc/en-us/search?query=signage&utf8=✓" target="_blank"">regional signage request form</a> on Navigation Center, or use Sign Center in regions where it is currently active.</li>' +
+          "<li>Design and order showsheets from Marketing Center. Confirm that the <a href='https://www.compass.com/app/marketing-center/#/' target='_blank''>show sheets</a> from Marketing Center. Confirm that the showsheets and/or brochures havebeen printed accurately (correct price, bed/bath count, agent contact information, etc.)</li>" +
+          '<li>Curate a playlist relevant to the upcoming open house that matches the vibe of the neighborhood.</li>';
+      } else {
+        list.innerHTML = storedValues;
       }
 
-      /* Include the padding and border in an element's total width and height */
-      * {
-        box-sizing: border-box;
-      }
+    }
+    getValues();
 
-      /* Remove margins and padding from the list */
-      ul {
-        margin: 0;
-        padding: 0;
-      }
-
-      /* Style the list items */
-      ul li {
-        cursor: pointer;
-        position: relative;
-        padding: 12px 8px 12px 40px;
-        list-style-type: none;
-        background: #eee;
-        font-family: sans-serif;
-        font-size: 13px;
-        transition: 0.2s;
-
-        /* make the list items unselectable */
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      /* Set all odd list items to a different color (zebra-stripes) */
-      ul li:nth-child(odd) {
-        background: #f9f9f9;
-      }
-
-      /* Darker background-color on hover */
-      ul li:hover {
-        background: #ddd;
-      }
-
-      /* When clicked on, add a background color and strike out text */
-      ul li.checked {
-        background: #888;
-        color: #fff;
-        text-decoration: line-through;
-      }
-
-      /* Add a "checked" mark when clicked on */
-      ul li.checked::before {
-        content: '';
-        position: absolute;
-        border-color: #fff;
-        border-style: solid;
-        border-width: 0 2px 2px 0;
-        top: 10px;
-        left: 16px;
-        transform: rotate(45deg);
-        height: 15px;
-        width: 7px;
-      }
-
-      /* Style the close button */
-      .close {
-        position: absolute;
-        right: 0;
-        top: 0;
-        padding: 12px 16px 12px 16px;
-      }
-
-      .close:hover {
-        background-color: #f44336;
-        color: white;
-      }
-
-      /* Style the header */
-      .header {
-        background-color: #000000;
-        padding: 30px 40px;
-        color: white;
-        font-family: sans-serif;
-        text-align: center;
-      }
-
-      /* Clear floats after the header */
-      .header:after {
-        content: "";
-        display: table;
-        clear: both;
-      }
-
-      /* Style the input */
-      input {
-        margin: 0;
-        border: none;
-        border-radius: 0;
-        width: 75%;
-        padding: 10px;
-        float: left;
-        font-size: 16px;
-      }
-
-      /* Style the "Add" button */
-      .addBtn {
-        padding: 10px;
-        width: 25%;
-        background: #d9d9d9;
-        color: #555;
-        float: left;
-        text-align: center;
-        font-size: 16px;
-        font-family: sans-serif;
-        cursor: pointer;
-        transition: 0.3s;
-        border-radius: 0;
-      }
-
-      .addBtn:hover {
-        background-color: #bbb;
-      }
-
-    </style>
-  </head>
-
-  <body>
-
-    <div id="myDIV" class="header">
-      <h2 style="margin:5px">1 Week Before</h2>
-      <input type="text" id="myInput" placeholder="Checklist Item...">
-      <span onclick="newElement()" class="addBtn">Add</span>
-    </div>
-
-    <ul id="myUL">
-      <li>Create your open house strategy early - and make it detailed. Do a walk through of the home, perhaps during the listing photography session, take detailed notes and ask these questions: <br>
-        <br> • What are key property features to tell the story of the property? <br>
-        <br> • Where am I going to place the sign-in sheet or the Compass Open House app? What about printed materials? <br>
-        <br> • In what order will I show the rooms when guests arrive? <br>
-        <br> • Where are the most optimal places to hang signs guiding visitors to the open house? <br>
-        <br> • Will parking be an issue? <br>
-        <br> • Thinking through these details in advance will ensure you’re fully prepared when it comes to open house day.</li>
-      <li>Call or text seller to confirm schedule of events. Then, email to your seller outlining the steps for open house prep. <a href="https://docs.google.com/document/d/1xDnm5q98JfQhVEQT_iWVhHu4y4NPci6B6pR5vzAQAeY/edit?usp=sharing">Email template here.</a>
-      </li>
-      <li>List the open house on the MLS and verify open house time(s) are correct on all syndicated websites.
-      </li>
-      <li>Email open house announcement to your contact list (brokers and potential buyers). <a href="https://www.compass.com/app/marketing-center/#/?designId=newOpenHouse">Email template here.</a>
-      </li>
-      <li>Let your network know about the open house by sharing <a href="https://www.compass.com/app/marketing-center/#/?designId=openhouse_square">this asset</a> on your social channels.
-      </li>
-      <li>Order an "Open House Rider" or "Swing A-frame" sign through your <a href="https://compasssupport.zendesk.com/hc/en-us/search?query=signage&utf8=✓">regional signage request form</a> on Navigation Center, or use Sign Center in regions where it is currently active.
-      </li>
-      <li>Design and order showsheets from Marketing Center. Confirm that the <a href="https://www.compass.com/app/marketing-center/#/">show sheets</a> from Marketing Center. Confirm that the showsheets and/or brochures have been printed accurately (correct price, bed/bath count, agent contact information, etc.)
-      </li>
-      <li> Curate a playlist relevant to the upcoming open house that matches the vibe of the neighborhood.
-      </li>
-    </ul>
-
-    <script>
-    
-    
-    
-    	// Add saved items from localStorage
-      for (i = 0; i < localStorage.length; i++) {
-      	var li = document.createElement("li");
-  	savedItemKey = localStorage.key(i);
-        var savedItemValue = window.localStorage.getItem(savedItemKey);
-  	var t = document.createTextNode(savedItemValue);
-        li.appendChild(t);
-      	document.getElementById("myUL").appendChild(li);
-      }
-      
-      
-      // Create a "close" button and append it to each list item
+    // Create a "close" and "check" button then append it to each list item
+    function createCloseCheckBtn() {
       var myNodelist = document.getElementsByTagName("LI");
-      var i;
+      // Create a "close" button and append it to each list item
       for (i = 0; i < myNodelist.length; i++) {
-        var span = document.createElement("SPAN");
-        var txt = document.createTextNode("\u00D7");
-        span.className = "close";
-        span.appendChild(txt);
-        myNodelist[i].appendChild(span);
-      }
+        // Add ability to edit list item text
+        // myNodelist[i].setAttribute("contenteditable", true);
+        if (myNodelist[i].span === undefined) {
+          var closeB = document.createElement("SPAN");
+          var closeIcon = document.createTextNode("\u00D7");
+          closeB.className = "close";
+          // closeB.setAttribute("contenteditable", false);
+          closeB.appendChild(closeIcon);
+          myNodelist[i].appendChild(closeB);
 
-      // Click on a close button to hide the current list item
+          // Create a "check" button and append it to each list item
+          // var checkB = document.createElement("SPAN");
+          // var checkIcon = document.createTextNode("\u2610");
+          // checkB.className = "check";
+          // checkB.setAttribute("contenteditable", false);
+          // checkB.appendChild(checkIcon);
+          // myNodelist[i].appendChild(checkB);
+        }
+      }
+    }
+    createCloseCheckBtn();
+
+    function closeBtnAction() {
+      // Click on a close button to delete the current list item
       var close = document.getElementsByClassName("close");
-      var i;
+      // var i;
       for (i = 0; i < close.length; i++) {
-        close[i].onclick = function() {
+        close[i].onclick = function () {
           var div = this.parentElement;
-          div.style.display = "none";
+          div.remove();
+          store();
         }
       }
+    }
+    closeBtnAction();
 
-      // Add a "checked" symbol when clicking on a list item
-      var list = document.querySelector('ul');
-      list.addEventListener('click', function(ev) {
-        if (ev.target.tagName === 'LI') {
-          ev.target.classList.toggle('checked');
-        }
-      }, false);
-
-      // Create a new list item when clicking on the "Add" button
-      function newElement() {
-        var li = document.createElement("li");
-        var inputValue = document.getElementById("myInput").value;
-        var t = document.createTextNode(inputValue);
-        window.localStorage.setItem('item0', inputValue);
-        li.appendChild(t);
-        if (inputValue === '') {
-          alert("You must write something!");
-        } else {
-          document.getElementById("myUL").appendChild(li);
-        }
-        document.getElementById("myInput").value = "";
-
-        var span = document.createElement("SPAN");
-        var txt = document.createTextNode("\u00D7");
-        span.className = "close";
-        span.appendChild(txt);
-        li.appendChild(span);
-
-        for (i = 0; i < close.length; i++) {
-          close[i].onclick = function() {
-            var div = this.parentElement;
-            div.style.display = "none";
-          }
-        }
+    // Strike out text when clicking on a list item
+    var list = document.querySelector('ul');
+    list.addEventListener('click', function (ev) {
+      if (ev.target.tagName === 'LI') {
+        ev.target.classList.toggle('checked');
       }
+      store();
+    }, false);
 
-    </script>
+    // Create a new list item when clicking on the "Add" button
+    function newElement() {
+      var li = document.createElement("li");
+      var inputValue = document.getElementById("myInput").value;
+      var t = document.createTextNode(inputValue);
+      li.appendChild(t);
+      // li.setAttribute('contenteditable', true);
+      if (inputValue === '') {
+        alert("You must write something!");
+      } else {
+        document.getElementById("myUL").appendChild(li);
+      }
+      document.getElementById("myInput").value = "";
 
-  </body>
+      createCloseCheckBtn();
+      closeBtnAction();
+      store();
+    }
+  </script>
+</body>
 
 </html>
